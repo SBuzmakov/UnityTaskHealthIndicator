@@ -1,11 +1,6 @@
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using Source.Scripts.AttributesScripts;
-using Source.Scripts.EnemyScripts;
-using Source.Scripts.MedicineChestScripts;
 using Source.Scripts.PlayerScripts;
 using Source.Scripts.UIScripts;
-using TMPro;
 using UnityEngine;
 
 namespace Source.Scripts.Services
