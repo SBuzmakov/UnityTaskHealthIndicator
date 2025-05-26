@@ -1,31 +1,16 @@
-using System;
-using Source.Scripts.PlayerScripts;
+using Source.Scripts.AttributesScripts;
+using Source.Scripts.Services;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Source.Scripts.MedicineChestScripts
 {
-    public class Healer : MonoBehaviour
+    public class Healer : ButtonInteractor
     {
-        [SerializeField] private float _healValue;
-        [SerializeField] private Button _healButton;
-
-        public event Action ButtonClicked;
-
-        private void OnEnable()
-        {
-            _healButton.onClick.AddListener(() =>ButtonClicked?.Invoke());
-        }
-
-        private void OnDisable()
-        {
-            _healButton.onClick.RemoveAllListeners();
-        }
+        [SerializeField] private float _healValue; 
         
-        public void Heal(Player player)
+        protected override void Act(Health health)
         {
-            player.Heal(_healValue);
+            health.Heal(_healValue);
         }
-
     }
 }

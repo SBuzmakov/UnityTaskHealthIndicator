@@ -1,10 +1,15 @@
+using System;
+using UnityEngine;
+
 namespace Source.Scripts.AttributesScripts
 {
-    public class Health
+    public class Health : MonoBehaviour
     {
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
 
+        public event Action HealthChanged;
+        
         public void Initialize(float maxHealth)
         {
             MaxHealth = maxHealth;
@@ -20,6 +25,8 @@ namespace Source.Scripts.AttributesScripts
                 CurrentHealth = 0f;
             else
                 CurrentHealth -= damage;
+            
+            HealthChanged?.Invoke();
         }
 
         public void Heal(float healValue)
@@ -31,6 +38,8 @@ namespace Source.Scripts.AttributesScripts
                 CurrentHealth = MaxHealth;
             else
                 CurrentHealth += healValue;
+            
+            HealthChanged?.Invoke();
         }
     }
 }

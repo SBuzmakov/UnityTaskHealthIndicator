@@ -1,16 +1,12 @@
 using System.Globalization;
 using TMPro;
+using UnityEngine;
 
 namespace Source.Scripts.UIScripts
 {
-    public class HealthTextViewer 
+    public class HealthTextViewer : MonoBehaviour , IHealthViewable
     {
-        private TextMeshProUGUI _healthText;
-
-        public HealthTextViewer(TextMeshProUGUI healthText)
-        {
-            _healthText = healthText;
-        }
+        [SerializeField] private TextMeshProUGUI _healthText;
         
         public void SetHealthView(float currentHealth, float maxHealth)
         {

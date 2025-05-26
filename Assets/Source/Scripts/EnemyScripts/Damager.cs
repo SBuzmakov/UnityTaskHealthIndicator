@@ -1,30 +1,16 @@
-using System;
-using Source.Scripts.PlayerScripts;
+using Source.Scripts.AttributesScripts;
+using Source.Scripts.Services;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Source.Scripts.EnemyScripts
 {
-    public class Damager : MonoBehaviour
+    public class Damager : ButtonInteractor
     {
-        [SerializeField] private float _damage;
-        [SerializeField] private Button _giveDamageButton;
-
-        public event Action ButtonClicked;
-
-        private void OnEnable()
-        {
-            _giveDamageButton.onClick.AddListener(() =>ButtonClicked?.Invoke());
-        }
-
-        private void OnDisable()
-        {
-            _giveDamageButton.onClick.RemoveAllListeners();
-        }
+        [SerializeField] private float _damage; 
         
-        public void GiveDamage(Player player)
+        protected override void Act(Health health)
         {
-            player.TakeDamage(_damage);
+            health.TakeDamage(_damage);
         }
     }
 }

@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using Source.Scripts.AttributesScripts;
 using Source.Scripts.EnemyScripts;
 using Source.Scripts.MedicineChestScripts;
 using Source.Scripts.PlayerScripts;
@@ -9,34 +12,27 @@ namespace Source.Scripts.Services
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] private Player _player;
-        [SerializeField] private TextMeshProUGUI _healthText;
-        [SerializeField] private Damager _damager;
-        [SerializeField] private Healer _healer;
-        [SerializeField] private HealthBarViewer _healthBarViewer1;
-        [SerializeField] private HealthBarViewer _healthBarViewer2;
-
+        [SerializeField] private Character _character;
+        [SerializeField] private HealthTextViewer _healthTextViewer;
+        [SerializeField] private HealthBarRapidViewer _healthBarRapidViewer;
+        [SerializeField] private HealthBarSmoothViewer _healthBarSmoothViewer;
+        
+        private List<IHealthViewable> _healthViewers;
         private HealthViewPresenter _healthViewPresenter;
-        private HealthTextViewer _healthTextViewer;
-        private ButtonsPresenter _buttonsPresenter;
         
         private void Awake()
         {
-            _player.Initialize();
+            _healthViewers = new List<IHealthViewable> {_healthTextViewer, _healthBarRapidViewer, _healthBarSmoothViewer};
             
-            _healthTextViewer = new HealthTextViewer(_healthText);
-            
-            _healthViewPresenter = new HealthViewPresenter(_player, _healthTextViewer, _healthBarViewer1, _healthBarViewer2);
+            _character.Initialize();
+
+            _healthViewPresenter = new HealthViewPresenter(_character.Health, _healthViewers);
             _healthViewPresenter.Initialize();
-            
-            _buttonsPresenter = new ButtonsPresenter(_player, _damager, _healer);
-            _buttonsPresenter.Initialize();
         }
 
         private void OnDestroy()
         {
             _healthViewPresenter.Dispose();
-            _buttonsPresenter.Dispose();
         }
     }
 }
